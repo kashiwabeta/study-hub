@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>視聴覚言語 · 镜头语言</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#262329;--ink-soft:#615c68;--paper:#edecf0;--card:#f8f7fa;--line:#cfccd6;--accent:#4f5d80;--accent-d:#3a456180;--gold:#c89b4a}
+  :root{--accent-d:#3a4561}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:var(--paper);color:var(--ink);min-height:100vh;font-family:'Zen Maru Gothic',sans-serif;
+    background-image:radial-gradient(circle at 85% 0%,rgba(79,93,128,.13),transparent 45%),radial-gradient(circle at 50% 105%,#e4e3ea,var(--paper) 60%);
+    padding:0 0 60px}
+  .wrap{max-width:600px;margin:0 auto;padding:0 22px}
+  header{padding:64px 0 14px;text-align:center}
+  .mark{font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:.5em;color:var(--accent-d);text-transform:uppercase;margin-bottom:10px}
+  .mark a{color:inherit;text-decoration:none}
+  h1{font-family:'Shippori Mincho',serif;font-weight:800;font-size:clamp(32px,8.5vw,46px);letter-spacing:.05em}
+  .sub{color:var(--ink-soft);font-size:13.5px;margin-top:12px;line-height:1.7}
+  .rule{display:flex;align-items:center;gap:14px;margin:30px 4px 22px;color:var(--line)}
+  .rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .rule span{font-family:'Shippori Mincho',serif;font-size:13px;color:var(--ink-soft);letter-spacing:.3em}
+  .cards{display:flex;flex-direction:column;gap:15px}
+  .card{display:flex;align-items:center;gap:17px;text-decoration:none;color:inherit;background:var(--card);
+    border:1px solid var(--line);border-radius:18px;padding:19px 20px;
+    box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 14px 36px -18px rgba(40,38,50,.4);transition:.28s;position:relative;overflow:hidden}
+  .card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:.3s}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .card:hover::after{transform:scaleY(1)}
+  .ic{flex:none;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-family:'Shippori Mincho',serif;font-weight:700;font-size:24px;color:#fff;background:linear-gradient(145deg,#6b7a9e,#4f5d80)}
+  .meta{flex:1}
+  .meta .t{font-family:'Shippori Mincho',serif;font-weight:700;font-size:18px;display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+  .meta .t small{font-family:'Zen Maru Gothic';font-size:11.5px;font-weight:400;color:var(--ink-soft)}
+  .meta .d{font-size:12.5px;color:var(--ink-soft);margin-top:4px;line-height:1.5}
+  .arrow{flex:none;font-size:20px;color:var(--line);font-family:serif;transition:.28s}
+  .card:hover .arrow{color:var(--accent);transform:translateX(4px)}
+  .ph{background:rgba(79,93,128,.06);border:1px dashed var(--line);color:var(--ink-soft);
+    border-radius:16px;padding:18px;font-size:12.5px;text-align:center;line-height:1.7;margin-top:6px}
+  footer{text-align:center;margin-top:34px;color:var(--ink-soft);font-size:11.5px}
+  footer .q{font-family:'Shippori Mincho',serif;font-size:13px;color:var(--ink);margin-bottom:6px}
+  footer a{color:var(--accent-d);text-decoration:none;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark"><a href="../index.html">← 学習ハブ</a></div>
+    <h1>視聴覚言語</h1>
+    <div class="sub">判断每个镜头为什么存在。<br>人物关系建立了吗？动作方向接得住吗？节奏在推进吗？</div>
+  </header>
+  <div class="rule"><span>入口</span></div>
+  <div class="cards">
+    <a class="card" href="#REPLACE_词卡">
+      <div class="ic">語</div>
+      <div class="meta"><div class="t">Anki 概念词卡 <small>27张 · 景别/光线/调色/剪辑</small></div>
+        <div class="d">视听语言 + 摄影质感 + 设备名词，背面带"何时用/画面效果/提示词"</div></div>
+      <div class="arrow">›</div>
+    </a>
+    <div class="ph">🎬 这一摊的入口还没填实。<br>告诉 Claude 你想放哪些（词卡 / 7步分镜SOP文档 / 提示词模板 / 参考片单），我来补全卡片。</div>
+  </div>
+  <footer>
+    <div class="q">なぜこのショットが存在するのか</div>
+    <a href="../index.html">← 返回学習ハブ总览</a>
+  </footer>
+</div>
+</body>
+</html>

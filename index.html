@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="学習ハブ">
+<title>学習ハブ · 我的学习中枢</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2b2724; --ink-soft:#6b635c; --paper:#f4efe6;
+    --card:#fbf8f1; --line:#ddd2bf; --accent:#c1543a; --accent-d:#a8412b;
+    --gold:#c89b4a; --green:#5f7a52; --indigo:#4f5d80;
+    --shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 16px 40px -20px rgba(60,45,30,.42);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);min-height:100vh;
+    font-family:'Zen Maru Gothic',sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 88% -8%, rgba(200,155,74,.12), transparent 42%),
+      radial-gradient(circle at 8% 6%, rgba(193,84,58,.09), transparent 38%),
+      radial-gradient(circle at 50% 108%, #ece4d4, var(--paper) 58%);
+    padding:0 0 70px;position:relative;overflow-x:hidden;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.4;z-index:0;
+    background-image:radial-gradient(rgba(120,100,70,.05) 1px,transparent 1px);background-size:4px 4px}
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+  header{padding:70px 0 8px;text-align:center;position:relative}
+  .mark{font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:.5em;
+    color:var(--accent-d);text-transform:uppercase;margin-bottom:12px;padding-left:.5em}
+  h1{font-family:'Shippori Mincho',serif;font-weight:800;font-size:clamp(38px,10vw,54px);letter-spacing:.08em;line-height:1.05}
+  .sub{color:var(--ink-soft);font-size:13.5px;margin-top:13px;letter-spacing:.03em;line-height:1.7}
+  .date{font-family:'Shippori Mincho',serif;color:var(--gold);font-size:13px;margin-top:9px;letter-spacing:.1em}
+
+  .rule{display:flex;align-items:center;gap:14px;margin:32px 4px 22px;color:var(--line)}
+  .rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .rule span{font-family:'Shippori Mincho',serif;font-size:13px;color:var(--ink-soft);letter-spacing:.3em}
+
+  .cards{display:flex;flex-direction:column;gap:17px}
+  .card{
+    display:flex;align-items:center;gap:19px;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:24px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    transition:transform .3s cubic-bezier(.2,.9,.3,1), box-shadow .3s, border-color .3s;
+  }
+  .card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+    transform:scaleY(0);transform-origin:top;transition:transform .32s}
+  .card.c1::after{background:var(--accent)} .card.c2::after{background:var(--green)} .card.c3::after{background:var(--indigo)}
+  .card:hover,.card:active{transform:translateY(-4px);
+    box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 26px 50px -22px rgba(60,45,30,.52);border-color:currentColor}
+  .card.c1:hover{border-color:var(--accent)} .card.c2:hover{border-color:var(--green)} .card.c3:hover{border-color:var(--indigo)}
+  .card:hover::after,.card:active::after{transform:scaleY(1)}
+  .ic{flex:none;width:62px;height:62px;border-radius:16px;display:grid;place-items:center;
+    font-family:'Shippori Mincho',serif;font-weight:700;font-size:30px;color:#fff;box-shadow:0 9px 20px -9px rgba(0,0,0,.4)}
+  .c1 .ic{background:linear-gradient(145deg,#c1543a,#a8412b)}
+  .c2 .ic{background:linear-gradient(145deg,#5f7a52,#48613d)}
+  .c3 .ic{background:linear-gradient(145deg,#6b7a9e,#4f5d80)}
+  .meta{flex:1;min-width:0}
+  .meta .t{font-family:'Shippori Mincho',serif;font-weight:700;font-size:22px;letter-spacing:.02em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .meta .t small{font-family:'Zen Maru Gothic';font-size:12px;font-weight:400;color:var(--ink-soft);letter-spacing:.04em}
+  .meta .d{font-size:12.5px;color:var(--ink-soft);margin-top:5px;line-height:1.55}
+  .meta .tags{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+  .meta .tag{font-size:10.5px;color:var(--ink-soft);background:rgba(120,100,70,.09);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+  .arrow{flex:none;font-size:22px;color:var(--line);transition:.3s;font-family:serif}
+  .card:hover .arrow,.card:active .arrow{transform:translateX(5px)}
+  .card.c1:hover .arrow{color:var(--accent)} .card.c2:hover .arrow{color:var(--green)} .card.c3:hover .arrow{color:var(--indigo)}
+
+  footer{text-align:center;margin-top:40px;color:var(--ink-soft);font-size:11.5px;letter-spacing:.05em}
+  footer .q{font-family:'Shippori Mincho',serif;font-size:14px;color:var(--ink);margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark">Learning Hub</div>
+    <h1>学習ハブ</h1>
+    <div class="sub">三件想做好的事，放在一个地方。<br>每天来这里，挑一件，往前走一步。</div>
+    <div class="date" id="today"></div>
+  </header>
+
+  <div class="rule"><span>三つの道</span></div>
+
+  <div class="cards">
+    <a class="card c1" href="japanese/index.html">
+      <div class="ic">語</div>
+      <div class="meta">
+        <div class="t">日本語 <small>JLPT 12月 · 开口交流</small></div>
+        <div class="d">把日语从纸面搬回声音里。打卡 · 补读音 · 裸听 · 挖矿</div>
+        <div class="tags"><span>每日打卡</span><span>Anki</span><span>NHK</span><span>批改</span></div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+
+    <a class="card c2" href="music/index.html">
+      <div class="ic">音</div>
+      <div class="meta">
+        <div class="t">音楽 · 吉他 <small>软摇滚 · 创作</small></div>
+        <div class="d">输出先行，允许难听。找律动 · 串和弦 · 写旋律</div>
+        <div class="tags"><span>每日练习</span><span>输出考核</span><span>歌单</span></div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+
+    <a class="card c3" href="film/index.html">
+      <div class="ic">映</div>
+      <div class="meta">
+        <div class="t">視聴覚言語 <small>分镜 · 镜头语言</small></div>
+        <div class="d">判断每个镜头为什么存在。7步分镜SOP · 概念词卡</div>
+        <div class="tags"><span>分镜工作流</span><span>Anki词卡</span><span>提示词</span></div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+  </div>
+
+  <footer>
+    <div class="q">千里の道も一歩から</div>
+    一次一件，一天一步。
+  </footer>
+</div>
+
+<script>
+  const d=new Date();
+  const wk=['日','月','火','水','木','金','土'][d.getDay()];
+  document.getElementById('today').textContent=
+    `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${wk}）`;
+</script>
+</body>
+</html>

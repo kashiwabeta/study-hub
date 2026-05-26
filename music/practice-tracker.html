@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日练琴打卡 · PROUD</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+  :root{
+    --sky:#1a8fd4;
+    --sky-deep:#1577b3;
+    --yellow:#f5d547;
+    --coral:#d98b6a;
+    --magenta:#e0457b;
+    --palm:#3a8a3a;
+    --palm-lt:#5cb85c;
+    --ink:#10324a;
+    --paper:#fdf6e3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Noto Sans SC',sans-serif;color:var(--ink);
+    background:var(--sky);min-height:100vh;
+  }
+  .scene{
+    background:linear-gradient(180deg,#1a8fd4,#3aa5e0);
+    padding:26px 20px 40px;position:relative;overflow:hidden;
+  }
+  .sun{position:absolute;top:30px;right:-30px;width:110px;height:110px;border-radius:50%;
+    background:radial-gradient(circle,#fff3c4,var(--yellow) 70%);box-shadow:0 0 50px rgba(245,213,71,.5);}
+  .kicker{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:.28em;
+    font-size:11px;color:var(--paper);text-transform:uppercase;position:relative;z-index:2;}
+  h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;line-height:1.02;
+    color:var(--paper);position:relative;z-index:2;margin-top:7px;text-shadow:0 3px 0 rgba(16,50,74,.18);}
+  h1 .hl{background:var(--yellow);color:var(--magenta);padding:0 9px;border-radius:4px;
+    transform:rotate(-2deg);display:inline-block;text-shadow:none;box-shadow:0 3px 0 rgba(16,50,74,.2);}
+  .sub{position:relative;z-index:2;color:var(--paper);font-size:13px;margin-top:12px;font-weight:500;}
+  .building{display:flex;height:14px;margin-top:22px;position:relative;z-index:2;}
+  .building i{flex:1;}
+  .building .y{background:var(--yellow);}.building .c{background:var(--coral);}
+  .building .m{background:var(--magenta);}.building .p{background:var(--palm);}
+
+  .wrap{background:var(--paper);border-radius:24px 24px 0 0;margin-top:-14px;
+    padding:24px 16px 50px;position:relative;z-index:3;}
+
+  .principle{background:var(--ink);color:var(--paper);border-radius:14px;padding:15px 16px;
+    font-size:13.5px;line-height:1.6;margin-bottom:24px;}
+  .principle b{color:var(--yellow);}
+
+  .section-t{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:12px;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--sky-deep);margin:0 0 14px;
+    display:flex;align-items:center;gap:9px;}
+  .section-t::after{content:'';flex:1;height:2px;background:var(--sky);opacity:.25;border-radius:2px;}
+
+  .block{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:15px 15px 13px;
+    margin-bottom:13px;box-shadow:4px 4px 0 var(--accent,var(--sky));position:relative;}
+  .block .time{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:11px;
+    letter-spacing:.08em;color:#fff;background:var(--accent,var(--sky));display:inline-block;
+    padding:2px 9px;border-radius:18px;}
+  .block h3{font-size:17px;margin:7px 0 5px;font-weight:700;}
+  .block p{font-size:13px;color:#46606f;line-height:1.5;}
+  .b1{--accent:var(--magenta);}.b2{--accent:var(--coral);}.b3{--accent:var(--palm);}
+
+  .tracker{margin-top:30px;}
+  .hint{font-size:12.5px;color:#46606f;margin-bottom:14px;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;font-size:12px;color:#46606f;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .swatch{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);}
+
+  .week{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:13px 14px;margin-bottom:11px;}
+  .week-label{font-size:12.5px;color:#46606f;margin-bottom:10px;}
+  .week-label .ph{color:var(--ink);font-weight:700;}
+  .dots{display:flex;gap:8px;flex-wrap:wrap;}
+  .dot{width:33px;height:33px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);
+    color:#90a4b0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;user-select:none;}
+  .dot:active{transform:scale(.86);}
+  .dot.on{color:#fff;}
+  .phase-p1 .dot.on{background:var(--magenta);}
+  .phase-p2 .dot.on{background:var(--coral);}
+  .phase-p3 .dot.on{background:var(--palm);}
+
+  .reset{margin-top:22px;width:100%;background:#fff;border:2px solid var(--ink);color:var(--ink);
+    border-radius:12px;padding:11px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;
+    letter-spacing:.04em;font-size:13px;cursor:pointer;}
+  .reset:active{background:var(--magenta);color:#fff;}
+
+  .back{display:inline-block;margin-top:20px;text-decoration:none;color:var(--sky-deep);
+    font-weight:700;font-size:13px;border:2px solid var(--sky-deep);border-radius:20px;padding:8px 18px;}
+  .back:active{background:var(--sky);color:#fff;}
+  footer{margin-top:26px;text-align:center;color:#46606f;font-size:12px;line-height:1.7;}
+  footer .big{color:var(--magenta);font-weight:700;font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="sun"></div>
+  <div class="kicker">Daily Practice</div>
+  <h1>每日练琴<span class="hl">打卡</span></h1>
+  <p class="sub">每天一小时 · 先让难听的东西流出来</p>
+  <div class="building"><i class="y"></i><i class="c"></i><i class="m"></i><i class="p"></i><i class="y"></i><i class="c"></i></div>
+</div>
+
+<div class="wrap">
+  <div class="principle">
+    <b>唯一总原则：</b>先输出，再谈好不好听。弹错了手不停，跟着鼓往前走。把"证明自己 / 变现"暂时删掉 90 天。
+  </div>
+
+  <div class="section-t">每天这样练（60 分钟）</div>
+
+  <div class="block b1">
+    <span class="time">前 15 分钟 · 找律动</span>
+    <h3>跟鼓机，只弹 1–2 个和弦</h3>
+    <p>选 75–90 bpm 的 rock/pop 鼓点（别再用节拍器）。手不许停，弹砸了下一拍继续。目标是身体晃起来，不是弹对。</p>
+  </div>
+  <div class="block b2">
+    <span class="time">中间 30 分钟 · 串和弦 + 录音</span>
+    <h3>4 个和弦循环，全程录音</h3>
+    <p>用熟的进行（Em-C-G-D 等）跟鼓走，能加唱就加。录下来逼自己不喊重来。录完听一遍，记下想改的地方。</p>
+  </div>
+  <div class="block b3">
+    <span class="time">后 15 分钟 · 哼出旋律</span>
+    <h3>对着循环瞎哼，再上琴找音</h3>
+    <p>先用嘴哼一段喜欢的，再去琴上找出来。约束自己只用 2–3 个音。辨识度在脑子里那个会哼歌的你，不在手指里。</p>
+  </div>
+
+  <div class="tracker">
+    <div class="section-t">13 周打卡</div>
+    <p class="hint">点圆点标记当天练过（点一下变实心，再点取消）。进度自动存在这台设备上。</p>
+    <div class="legend">
+      <span><i class="swatch" style="background:var(--magenta)"></i>阶段一 找律动</span>
+      <span><i class="swatch" style="background:var(--coral)"></i>阶段二 串和弦</span>
+      <span><i class="swatch" style="background:var(--palm)"></i>阶段三 写旋律</span>
+    </div>
+    <div id="weeks"></div>
+    <button class="reset" id="resetBtn">清空所有打卡记录</button>
+  </div>
+
+  <footer>
+    <p class="big">你不是不会弹吉他。</p>
+    <p>你要的是创作，创作要的是敢让难听先出来的勇气。</p>
+  </footer>
+
+  <a class="back" href="index.html">← 回音乐入口</a>
+</div>
+
+<script>
+  const weeks=[
+    {n:1,phase:'p1'},{n:2,phase:'p1'},{n:3,phase:'p1'},
+    {n:4,phase:'p2'},{n:5,phase:'p2'},{n:6,phase:'p2'},{n:7,phase:'p2'},
+    {n:8,phase:'p3'},{n:9,phase:'p3'},{n:10,phase:'p3'},{n:11,phase:'p3'},{n:12,phase:'p3'},{n:13,phase:'p3'}
+  ];
+  const phaseName={p1:'阶段一 · 找律动',p2:'阶段二 · 串和弦 + 录音',p3:'阶段三 · 哼旋律 · 写自己的歌'};
+  const STORE='guitar90_v1';
+  let state={};
+  try{state=JSON.parse(localStorage.getItem(STORE))||{};}catch(e){state={};}
+  const wrap=document.getElementById('weeks');
+  weeks.forEach(w=>{
+    const div=document.createElement('div');
+    div.className='week phase-'+w.phase;
+    div.innerHTML=`<div class="week-label">第 ${w.n} 周 · <span class="ph">${phaseName[w.phase]}</span></div>`;
+    const dots=document.createElement('div');dots.className='dots';
+    for(let d=1;d<=7;d++){
+      const key=`w${w.n}d${d}`;
+      const dot=document.createElement('div');
+      dot.className='dot'+(state[key]?' on':'');
+      dot.textContent=d;
+      dot.addEventListener('click',()=>{state[key]=!state[key];dot.classList.toggle('on');save();});
+      dots.appendChild(dot);
+    }
+    div.appendChild(dots);wrap.appendChild(div);
+  });
+  function save(){try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}}
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    if(confirm('确定清空全部打卡记录吗？')){state={};save();
+      document.querySelectorAll('.dot.on').forEach(d=>d.classList.remove('on'));}
+  });
+</script>
+</body>
+</html>

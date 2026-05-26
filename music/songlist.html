@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>起步歌单 · PROUD</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+  :root{
+    --sky:#1a8fd4;--sky-deep:#1577b3;--yellow:#f5d547;--coral:#d98b6a;
+    --magenta:#e0457b;--palm:#3a8a3a;--palm-lt:#5cb85c;--ink:#10324a;--paper:#fdf6e3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Noto Sans SC',sans-serif;color:var(--ink);background:var(--sky);min-height:100vh;}
+  .scene{background:linear-gradient(180deg,#1a8fd4,#3aa5e0);padding:26px 20px 40px;position:relative;overflow:hidden;}
+  .sun{position:absolute;top:30px;right:-30px;width:110px;height:110px;border-radius:50%;
+    background:radial-gradient(circle,#fff3c4,var(--yellow) 70%);box-shadow:0 0 50px rgba(245,213,71,.5);}
+  .kicker{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:.28em;
+    font-size:11px;color:var(--paper);text-transform:uppercase;position:relative;z-index:2;}
+  h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;line-height:1.02;
+    color:var(--paper);position:relative;z-index:2;margin-top:7px;text-shadow:0 3px 0 rgba(16,50,74,.18);}
+  h1 .hl{background:var(--yellow);color:var(--magenta);padding:0 9px;border-radius:4px;
+    transform:rotate(-2deg);display:inline-block;text-shadow:none;box-shadow:0 3px 0 rgba(16,50,74,.2);}
+  .sub{position:relative;z-index:2;color:var(--paper);font-size:13px;margin-top:12px;font-weight:500;}
+  .building{display:flex;height:14px;margin-top:22px;position:relative;z-index:2;}
+  .building i{flex:1;}
+  .building .y{background:var(--yellow);}.building .c{background:var(--coral);}
+  .building .m{background:var(--magenta);}.building .p{background:var(--palm);}
+
+  .wrap{background:var(--paper);border-radius:24px 24px 0 0;margin-top:-14px;padding:24px 16px 50px;position:relative;z-index:3;}
+
+  .principle{background:var(--ink);color:var(--paper);border-radius:14px;padding:15px 16px;
+    font-size:13.5px;line-height:1.6;margin-bottom:24px;}
+  .principle b{color:var(--yellow);}
+
+  .tierhead{display:flex;align-items:center;gap:10px;margin:26px 0 14px;}
+  .tierhead .num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;
+    color:#fff;background:var(--accent);width:40px;height:40px;border-radius:11px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:3px 3px 0 var(--ink);}
+  .tierhead .t{}
+  .tierhead .t h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;line-height:1.1;}
+  .tierhead .t p{font-size:11.5px;color:#90a4b0;margin-top:2px;}
+
+  .d1{--accent:var(--magenta);}.d2{--accent:var(--coral);}.d3{--accent:var(--palm);}
+
+  .song{background:#fff;border:2px solid var(--ink);border-radius:13px;padding:13px 14px;margin-bottom:11px;
+    box-shadow:4px 4px 0 var(--accent);}
+  .song .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .song .name{font-size:15.5px;font-weight:700;}
+  .song .artist{font-size:12px;color:#90a4b0;white-space:nowrap;}
+  .song .chords{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;}
+  .song .chord{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:12px;
+    background:var(--paper);border:1.5px solid var(--ink);border-radius:6px;padding:2px 8px;}
+  .song .note{font-size:12px;color:#46606f;margin-top:8px;line-height:1.45;}
+
+  .callout{background:#fff;border:2px dashed var(--coral);border-radius:14px;padding:15px 16px;
+    font-size:13px;line-height:1.6;color:#46606f;margin-top:8px;}
+  .callout b{color:var(--coral);}
+  .howto{background:var(--yellow);border:2px solid var(--ink);border-radius:14px;padding:15px 16px;
+    font-size:13px;line-height:1.6;margin-bottom:24px;box-shadow:4px 4px 0 var(--ink);}
+  .howto b{color:var(--magenta);}
+  .howto .where{font-size:12px;color:#7a6a1a;margin-top:8px;}
+
+  .back{display:inline-block;margin-top:24px;text-decoration:none;color:var(--sky-deep);
+    font-weight:700;font-size:13px;border:2px solid var(--sky-deep);border-radius:20px;padding:8px 18px;}
+  .back:active{background:var(--sky);color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="sun"></div>
+  <div class="kicker">Starter Pack</div>
+  <h1>起步<span class="hl">歌单</span></h1>
+  <p class="sub">先吃和声简单的歌。藤井风、Lamp 供在第三档当目标。</p>
+  <div class="building"><i class="y"></i><i class="c"></i><i class="m"></i><i class="p"></i><i class="y"></i><i class="c"></i></div>
+</div>
+
+<div class="wrap">
+  <div class="principle">
+    <b>别拿别人的终点当自己的起点。</b>我喜欢 Lamp 和藤井风，说明我耳朵不笨——被吸引的是高级和声。但那是和声最难的一档。我"会写软摇滚"和我"能弹下藤井风"是几乎无关的两件事。
+  </div>
+
+  <div class="howto">
+    <b>怎么用这份歌单：</b>从第一档开始，目标只有一个——<b>从头到尾完整唱下来一首，不追求好听</b>。和弦谱去 U-Fret（日系）或者各吉他谱站搜歌名 +「初心者向け簡単コード」/「简单和弦」即可。
+    <div class="where">下面每首列的是主要和弦，实际编配以谱为准。</div>
+  </div>
+
+  <!-- TIER 1 -->
+  <div class="tierhead d1">
+    <div class="num">1</div>
+    <div class="t"><h2>建立信心 · 4 和弦撑全曲</h2><p>目标：完整唱下来，不中断</p></div>
+  </div>
+
+  <div class="song d1">
+    <div class="top"><span class="name">八月十五</span><span class="artist">房东的猫</span></div>
+    <div class="chords"><span class="chord">C</span><span class="chord">G</span><span class="chord">Am</span><span class="chord">F</span></div>
+    <p class="note">右手 4321 分解，非常适合新手起步。软、慢、好唱。</p>
+  </div>
+
+  <div class="song d1">
+    <div class="top"><span class="name">董小姐</span><span class="artist">宋冬野</span></div>
+    <div class="chords"><span class="chord">C</span><span class="chord">G</span><span class="chord">Am</span><span class="chord">Em</span><span class="chord">F</span></div>
+    <p class="note">经典入门弹唱，唯一的难点是小 F（大横按）。拿下它你就过了新手关。</p>
+  </div>
+
+  <div class="song d1">
+    <div class="top"><span class="name">风になる</span><span class="artist">つじあやの</span></div>
+    <div class="chords"><span class="chord">C</span><span class="chord">Am</span><span class="chord">F</span><span class="chord">G</span><span class="chord">Em</span></div>
+    <p class="note">猫的报恩主题曲，明亮、节奏稳，和声友好，特别适合练"跟着走不停"。</p>
+  </div>
+
+  <div class="song d1">
+    <div class="top"><span class="name">任意 4 和弦万能进行</span><span class="artist">自己编</span></div>
+    <div class="chords"><span class="chord">C</span><span class="chord">G</span><span class="chord">Am</span><span class="chord">F</span></div>
+    <p class="note">1-6-4-5（C-Am-F-G）和它的翻转。这不是要扒的歌，是你<b>写歌的起点</b>——好多歌都能套，正说明它能产出无数你自己的东西。</p>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="tierhead d2">
+    <div class="num">2</div>
+    <div class="t"><h2>开始有味道 · 加一两个七和弦</h2><p>目标：尝到高级和声的甜头</p></div>
+  </div>
+
+  <div class="song d2">
+    <div class="top"><span class="name">偏软的独立/民谣慢歌</span><span class="artist">含 Cmaj7 / Am7 一类</span></div>
+    <div class="chords"><span class="chord">Cmaj7</span><span class="chord">Am7</span><span class="chord">Dm7</span><span class="chord">G</span></div>
+    <p class="note">把第一档的三和弦换成大七/小七，立刻有清新、慵懒的味道。这是通往 city pop 的第一步台阶。</p>
+  </div>
+
+  <div class="song d2">
+    <div class="top"><span class="name">city pop 慢副歌</span><span class="artist">山下达郎 / 竹内玛利亚 线</span></div>
+    <div class="chords"><span class="chord">maj7</span><span class="chord">m7</span><span class="chord">7</span><span class="chord">分解练习</span></div>
+    <p class="note">先别整首，挑你最喜欢的<b>那段副歌</b>练。慢慢习惯七和弦之间的移动手感。</p>
+  </div>
+
+  <div class="callout">
+    <b>第二档心法：</b>难和弦记不住，是因为在背孤立图形。等耳朵醒了你会"听懂"它们为什么这么排，就不再是死记。所以这个问题会随耳朵训练自己化解，现在别硬攻。
+  </div>
+
+  <!-- TIER 3 -->
+  <div class="tierhead d3">
+    <div class="num">3</div>
+    <div class="t"><h2>目标区 · 现在只听不弹</h2><p>用来分析、当远方的灯塔</p></div>
+  </div>
+
+  <div class="song d3">
+    <div class="top"><span class="name">藤井 風 的复杂曲目</span><span class="artist">藤井風</span></div>
+    <div class="chords"><span class="chord">爵士味进行</span><span class="chord">转调</span><span class="chord">离调</span></div>
+    <p class="note">满是爵士味和声与转调，是多年功力的结果。现在弹不下来完全正常，不妨碍你写自己的好东西。</p>
+  </div>
+
+  <div class="song d3">
+    <div class="top"><span class="name">真夜中のドア〜Stay With Me</span><span class="artist">松原みき</span></div>
+    <div class="chords"><span class="chord">maj7</span><span class="chord">m7-5</span><span class="chord">aug</span><span class="chord">转位</span></div>
+    <p class="note">city pop 代表作，但和声密度极高（七和弦、增和弦、转位满地跑）。当听觉范本，别当起步曲。</p>
+  </div>
+
+  <div class="song d3">
+    <div class="top"><span class="name">Lamp 的曲目</span><span class="artist">Lamp</span></div>
+    <div class="chords"><span class="chord">高密度和声</span><span class="chord">bossa 味</span></div>
+    <p class="note">和声密度高到离谱，是你的审美灯塔。听、感受，等前两档站稳了再回来啃。</p>
+  </div>
+
+  <a class="back" href="index.html">← 回音乐入口</a>
+</div>
+
+</body>
+</html>

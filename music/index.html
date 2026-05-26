@@ -3,65 +3,227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>音楽 · 吉他</title>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<title>🎸 音乐 · Creator Reset</title>
 <style>
-  :root{--ink:#2b2724;--ink-soft:#6b635c;--paper:#f1f0e8;--card:#fafaf3;--line:#d6d2c0;--accent:#5f7a52;--accent-d:#48613d;--gold:#c89b4a}
-  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  body{background:var(--paper);color:var(--ink);min-height:100vh;font-family:'Zen Maru Gothic',sans-serif;
-    background-image:radial-gradient(circle at 85% 0%,rgba(95,122,82,.12),transparent 45%),radial-gradient(circle at 50% 105%,#e8e7dc,var(--paper) 60%);
-    padding:0 0 60px}
-  .wrap{max-width:600px;margin:0 auto;padding:0 22px}
-  header{padding:64px 0 14px;text-align:center}
-  .mark{font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:.5em;color:var(--accent-d);text-transform:uppercase;margin-bottom:10px}
-  .mark a{color:inherit;text-decoration:none}
-  h1{font-family:'Shippori Mincho',serif;font-weight:800;font-size:clamp(36px,10vw,52px);letter-spacing:.06em}
-  .sub{color:var(--ink-soft);font-size:13.5px;margin-top:12px;line-height:1.7}
-  .rule{display:flex;align-items:center;gap:14px;margin:30px 4px 22px;color:var(--line)}
-  .rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
-  .rule span{font-family:'Shippori Mincho',serif;font-size:13px;color:var(--ink-soft);letter-spacing:.3em}
-  .cards{display:flex;flex-direction:column;gap:15px}
-  .card{display:flex;align-items:center;gap:17px;text-decoration:none;color:inherit;background:var(--card);
-    border:1px solid var(--line);border-radius:18px;padding:19px 20px;
-    box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 14px 36px -18px rgba(60,55,40,.4);transition:.28s;position:relative;overflow:hidden}
-  .card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:.3s}
-  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
-  .card:hover::after{transform:scaleY(1)}
-  .ic{flex:none;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-family:'Shippori Mincho',serif;font-weight:700;font-size:24px;color:#fff;background:linear-gradient(145deg,#5f7a52,#48613d)}
-  .meta{flex:1}
-  .meta .t{font-family:'Shippori Mincho',serif;font-weight:700;font-size:18px;display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
-  .meta .t small{font-family:'Zen Maru Gothic';font-size:11.5px;font-weight:400;color:var(--ink-soft)}
-  .meta .d{font-size:12.5px;color:var(--ink-soft);margin-top:4px;line-height:1.5}
-  .arrow{flex:none;font-size:20px;color:var(--line);font-family:serif;transition:.28s}
-  .card:hover .arrow{color:var(--accent);transform:translateX(4px)}
-  .ph{background:rgba(95,122,82,.06);border:1px dashed var(--line);color:var(--ink-soft);
-    border-radius:16px;padding:18px;font-size:12.5px;text-align:center;line-height:1.7;margin-top:6px}
-  footer{text-align:center;margin-top:34px;color:var(--ink-soft);font-size:11.5px}
-  footer .q{font-family:'Shippori Mincho',serif;font-size:13px;color:var(--ink);margin-bottom:6px}
-  footer a{color:var(--accent-d);text-decoration:none;border-bottom:1px solid var(--line)}
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+  :root{
+    --sky:#1a8fd4;
+    --sky-deep:#1577b3;
+    --yellow:#f5d547;
+    --coral:#d98b6a;
+    --magenta:#e0457b;
+    --palm:#3a8a3a;
+    --palm-lt:#5cb85c;
+    --ink:#10324a;
+    --paper:#fdf6e3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Noto Sans SC',sans-serif;
+    color:var(--ink);
+    background:var(--sky);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* ---- sky + sun scene ---- */
+  .scene{
+    position:relative;
+    background:linear-gradient(180deg,#1a8fd4 0%,#3aa5e0 78%,#6cc3ec 100%);
+    padding:30px 20px 70px;
+    overflow:hidden;
+  }
+  .sun{
+    position:absolute;top:54px;right:-40px;
+    width:150px;height:150px;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, #fff3c4, var(--yellow) 70%);
+    box-shadow:0 0 60px rgba(245,213,71,.5);
+    opacity:.92;
+  }
+  /* palms */
+  .palm{position:absolute;bottom:0;width:0;height:0;}
+  .trunk{position:absolute;bottom:0;width:9px;background:linear-gradient(90deg,#7a4a2a,#9c6238);border-radius:4px;transform-origin:bottom;}
+  .frond{position:absolute;width:78px;height:24px;background:var(--palm);border-radius:0 80% 0 80%;transform-origin:left center;}
+  .frond.d{background:var(--palm-lt);}
+
+  .kicker{
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:800;letter-spacing:.3em;font-size:12px;
+    color:var(--paper);text-transform:uppercase;
+    position:relative;z-index:3;
+    text-shadow:0 1px 4px rgba(16,50,74,.3);
+  }
+  h1{
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:800;font-size:46px;line-height:.98;
+    color:var(--paper);position:relative;z-index:3;margin-top:8px;
+    text-shadow:0 3px 0 rgba(16,50,74,.18);
+    letter-spacing:-.01em;
+  }
+  h1 .proud{
+    display:inline-block;background:var(--yellow);color:var(--magenta);
+    padding:0 12px;border-radius:4px;transform:rotate(-2deg);
+    box-shadow:0 4px 0 rgba(16,50,74,.2);text-shadow:none;
+    font-size:40px;margin-top:6px;
+  }
+  .tagline{
+    position:relative;z-index:3;color:var(--paper);
+    margin-top:18px;font-size:14px;font-weight:500;max-width:300px;
+    text-shadow:0 1px 3px rgba(16,50,74,.3);
+  }
+
+  /* ---- building strip divider ---- */
+  .building{
+    display:flex;height:18px;position:relative;z-index:4;margin-top:30px;
+  }
+  .building i{flex:1;}
+  .building .y{background:var(--yellow);}
+  .building .c{background:var(--coral);}
+  .building .m{background:var(--magenta);}
+  .building .p{background:var(--palm);}
+
+  /* ---- content ---- */
+  .wrap{
+    background:var(--paper);
+    padding:28px 18px 50px;
+    border-radius:26px 26px 0 0;
+    margin-top:-16px;
+    position:relative;z-index:5;
+    min-height:50vh;
+  }
+  .lead{
+    background:#fff;border:2px solid var(--ink);
+    border-radius:14px;padding:15px 16px;
+    font-size:14px;line-height:1.6;margin-bottom:26px;
+    box-shadow:4px 4px 0 var(--sky);
+  }
+  .lead b{color:var(--magenta);}
+
+  .section-t{
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+    font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--sky-deep);margin:0 0 14px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .section-t::after{content:'';flex:1;height:2px;background:var(--sky);opacity:.25;border-radius:2px;}
+
+  .cards{display:flex;flex-direction:column;gap:14px;}
+  .card{
+    display:block;text-decoration:none;color:var(--ink);
+    background:#fff;border:2px solid var(--ink);border-radius:16px;
+    padding:18px;position:relative;overflow:hidden;
+    box-shadow:5px 5px 0 var(--cardshadow,var(--sky));
+    transition:transform .14s, box-shadow .14s;
+  }
+  .card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--cardshadow,var(--sky));}
+  .card .tag{
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:#fff;background:var(--cardshadow,var(--sky));
+    display:inline-block;padding:3px 9px;border-radius:20px;margin-bottom:9px;
+  }
+  .card h3{font-size:19px;font-weight:700;margin-bottom:5px;}
+  .card p{font-size:13px;color:#46606f;line-height:1.55;}
+  .card .arrow{position:absolute;right:16px;top:16px;font-size:20px;color:var(--cardshadow,var(--sky));font-weight:800;}
+
+  .c-plan{--cardshadow:var(--magenta);}
+  .c-check{--cardshadow:var(--palm);}
+  .c-test{--cardshadow:var(--coral);}
+  .c-songs{--cardshadow:var(--sky);}
+
+  .principle{
+    margin-top:26px;padding:16px;border-radius:14px;
+    background:var(--ink);color:var(--paper);font-size:13.5px;line-height:1.65;
+  }
+  .principle b{color:var(--yellow);}
+
+  .back{
+    display:inline-block;margin-top:24px;text-decoration:none;
+    color:var(--sky-deep);font-weight:700;font-size:13px;
+    border:2px solid var(--sky-deep);border-radius:20px;padding:8px 18px;
+  }
+  .back:active{background:var(--sky);color:#fff;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="mark"><a href="../index.html">← 学習ハブ</a></div>
-    <h1>音楽 · 吉他</h1>
-    <div class="sub">输出先行，允许难听。<br>过去用理论给自己加自由，现在用约束逼出音乐性。</div>
-  </header>
-  <div class="rule"><span>入口</span></div>
-  <div class="cards">
-    <a class="card" href="#REPLACE_练习打卡">
-      <div class="ic">練</div>
-      <div class="meta"><div class="t">每日练习打卡 <small>找律动 · 串和弦 · 写旋律</small></div>
-        <div class="d">三段式一小时安排 + 输出型考核（每周交一段、每月交一个作品）</div></div>
-      <div class="arrow">›</div>
-    </a>
-    <div class="ph">🎸 这一摊的入口还没填实。<br>告诉 Claude 你音乐打卡表的去向、想放哪些跳转（打卡 / 歌单 / 找创作导师 / 录音存档），我来补全卡片。</div>
+
+<div class="scene">
+  <div class="sun"></div>
+
+  <!-- palm 1 (tall left) -->
+  <div class="palm" style="left:18px;">
+    <div class="trunk" style="height:150px;transform:rotate(-4deg);"></div>
+    <div style="position:absolute;bottom:150px;left:0;">
+      <div class="frond" style="transform:rotate(-30deg);"></div>
+      <div class="frond d" style="transform:rotate(20deg);"></div>
+      <div class="frond" style="transform:rotate(160deg) scaleY(-1);"></div>
+      <div class="frond d" style="transform:rotate(-150deg) scaleY(-1);"></div>
+    </div>
   </div>
-  <footer>
-    <div class="q">下手くそでもいい、出せばいい</div>
-    <a href="../index.html">← 返回学習ハブ总览</a>
-  </footer>
+  <!-- palm 2 (mid) -->
+  <div class="palm" style="left:48%;">
+    <div class="trunk" style="height:110px;transform:rotate(8deg);"></div>
+    <div style="position:absolute;bottom:115px;left:8px;">
+      <div class="frond" style="transform:rotate(-35deg) scale(.85);"></div>
+      <div class="frond d" style="transform:rotate(15deg) scale(.85);"></div>
+      <div class="frond" style="transform:rotate(165deg) scaleY(-1) scale(.85);"></div>
+    </div>
+  </div>
+
+  <div class="kicker">90-Day Creator Reset</div>
+  <h1>音乐<br><span class="proud">PROUD</span></h1>
+  <p class="tagline">先输出，再谈好不好听。弹错了手不停，跟着鼓往前走。</p>
+
+  <div class="building">
+    <i class="y"></i><i class="c"></i><i class="m"></i><i class="p"></i><i class="y"></i><i class="c"></i>
+  </div>
 </div>
+
+<div class="wrap">
+  <div class="lead">
+    我不是不会弹吉他，我只是把"会弹"误解成了"能扒带 jam"——那是另一个工种。我要的是<b>创作自己的音乐</b>。把"证明 / 变现"暂时删掉 90 天。
+  </div>
+
+  <div class="section-t">我的训练台</div>
+  <div class="cards">
+
+    <a class="card c-check" href="practice-tracker.html">
+      <span class="arrow">→</span>
+      <span class="tag">每天 60 分钟</span>
+      <h3>每日打卡 · 13 周</h3>
+      <p>找律动 → 串和弦录音 → 哼旋律。点圆点打卡，进度存本机。</p>
+    </a>
+
+    <a class="card c-plan" href="plan.html">
+      <span class="arrow">→</span>
+      <span class="tag">三阶段</span>
+      <h3>创作者重启计划</h3>
+      <p>找回律动 → 串自己的和弦循环 → 往循环上哼旋律。反理论先行的路。</p>
+    </a>
+
+    <a class="card c-test" href="assessment.html">
+      <span class="arrow">→</span>
+      <span class="tag">输出型考核</span>
+      <h3>硬性目标 & 考核</h3>
+      <p>不考"弹得对不对"，考"产出了多少"。每周录音、每月一段原创。</p>
+    </a>
+
+    <a class="card c-songs" href="songlist.html">
+      <span class="arrow">→</span>
+      <span class="tag">素材库</span>
+      <h3>起步歌单</h3>
+      <p>先吃和声简单的日系 / city pop 慢歌。藤井风、Lamp 供在第三档当目标，别当起点。</p>
+    </a>
+
+  </div>
+
+  <div class="principle">
+    <b>破"五声音阶监狱"：</b>别学更多音阶，反而限制自己——一段只用 2–3 个音、先用嘴哼再上琴找音、让旋律落在和弦音上。辨识度在你脑子里那个会哼歌的你，不在手指里。
+  </div>
+
+  <a class="back" href="../index.html">← 回总入口</a>
+</div>
+
 </body>
 </html>

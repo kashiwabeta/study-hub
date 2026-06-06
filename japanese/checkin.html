@@ -184,6 +184,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="sync.js"></script>
 <script>
 const STORE_KEY='jp_daily_v1';
 const $=s=>document.querySelector(s);
@@ -221,18 +222,15 @@ const STAGES=[
 
 let state=null;
 
-function load(){
-  try{
-    const r=localStorage.getItem(STORE_KEY);
-    state=r? JSON.parse(r):null;
-  }catch(e){state=null;}
+async function load(){
+  state = await Store.load(STORE_KEY);
   if(!state) state={days:{},streak:0,total:0,lastDay:null};
   if(!state.days[todayStr()]) state.days[todayStr()]={checks:{},listen:{},diary:'',done:false};
   render();
+  if(Store.cloudEnabled){const e=$('#err');if(e){e.textContent='☁ 云同步已开启';e.style.display='block';e.style.color='#5f7a52';setTimeout(()=>e.style.display='none',2000);}}
 }
 function save(){
-  try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}
-  catch(e){showErr('保存失败：浏览器存储被禁用了（请勿用无痕模式）');}
+  Store.save(STORE_KEY, state);
 }
 function showErr(m){const e=$('#err');e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',3000);}
 
@@ -336,7 +334,7 @@ function bind(){
   $('#diary').oninput=e=>{state.days[todayStr()].diary=e.target.value;};
   $('#diary').onblur=()=>{save();renderJournal();};
   $('#finishBtn').onclick=finish;
-  $('#resetBtn').onclick=()=>{if(confirm('确定清空所有打卡记录？此操作不可恢复。')){state={days:{},streak:0,total:0,lastDay:null};save();load();}};
+  $('#resetBtn').onclick=()=>{if(confirm('确定清空所有打卡记录？此操作不可恢复（含云端）。')){state={days:{},streak:0,total:0,lastDay:null};state.days[todayStr()]={checks:{},listen:{},diary:'',done:false};save();render();}};
 }
 
 function finish(){

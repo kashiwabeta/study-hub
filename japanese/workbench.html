@@ -8,6 +8,7 @@
 <title>日本語 · 工作台</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="n2_grammar_data.js"></script>
+<script src="sync.js"></script>
 <style>
   :root{
     --ink:#2b2724; --ink-soft:#6b635c; --paper:#f4efe6; --paper-2:#ece4d6;
@@ -243,10 +244,8 @@ const todayStr=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.get
 
 // ---------- 状态 ----------
 const KEY='jp_workbench_v1';
-let st;
-try{st=JSON.parse(localStorage.getItem(KEY))||null;}catch(e){st=null;}
-if(!st) st={grammar:{},notes:[],noteSeq:1};
-function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){toast('保存失败：勿用无痕模式');}}
+let st={grammar:{},notes:[],noteSeq:1};
+function save(){ Store.save(KEY, st); }
 
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2600);}
 function copy(text){
@@ -429,7 +428,16 @@ $('#nw-word').addEventListener('keydown',e=>{if(e.key==='Enter')addNote();});
 $('#nw-pack').onclick=packToday;
 $('#q-gen').onclick=genQuestion;
 $('#q-review').onclick=genReview;
-renderGrammar();renderNotes();fillLessonSelect();
+
+// 初始化：先尝试从云端加载数据，再渲染
+fillLessonSelect();
+(async ()=>{
+  const loaded = await Store.load(KEY);
+  if(loaded) st = loaded;
+  renderGrammar();renderNotes();
+  if(Store.cloudEnabled) toast('☁ 云同步已开启');
+})();
+
 </script>
 </body>
 </html>

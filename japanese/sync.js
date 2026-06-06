@@ -1,12 +1,12 @@
 // ============================================================
 //  云同步配置 —— 把你的两个值填到下面引号里
 // ============================================================
-//  1. SUPABASE_URL：https://ngpyaganbzdkduzrvcdl.supabase.co
-//  2. SUPABASE_ANON_KEY：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ncHlhZ2FuYnpka2R1enJ2Y2RsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTIyNjksImV4cCI6MjA5NjMyODI2OX0.eDvfU0GD46rDK571SnaFnDIqTDZUxpB11HigDv11vwU
+//  1. SUPABASE_URL：你的项目 URL（形如 https://xxxx.supabase.co）
+//  2. SUPABASE_ANON_KEY：anon public key（eyJ... 开头的一长串）
 //  两个都填对后，云同步才会生效；留空则自动退回纯本地模式。
 // ------------------------------------------------------------
-const SUPABASE_URL  = "https://ngpyaganbzdkduzrvcdl.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ncHlhZ2FuYnpka2R1enJ2Y2RsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTIyNjksImV4cCI6MjA5NjMyODI2OX0.eDvfU0GD46rDK571SnaFnDIqTDZUxpB11HigDv11vwU";
+const SUPABASE_URL  = "在这里填你的项目URL";
+const SUPABASE_ANON_KEY = "在这里填你的anon public key";
 // ============================================================
 
 const CLOUD_ON = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20;

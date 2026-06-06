@@ -8,6 +8,7 @@
 <title>日本語 · 工作台</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="n2_grammar_data.js"></script>
+<script src="n4_listening_data.js"></script>
 <script src="sync.js"></script>
 <style>
   :root{
@@ -127,6 +128,20 @@
   .note-box{font-size:11.5px;color:var(--ink-soft);background:rgba(200,155,74,.09);border:1px dashed var(--line);
     border-radius:10px;padding:11px 13px;line-height:1.6;margin-top:4px}
 
+  /* 听力章节 */
+  .chap{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden;background:#fff;transition:.2s}
+  .chap.done{background:var(--green-soft);border-color:#c3d2b3}
+  .chap-head{display:flex;align-items:center;gap:11px;padding:13px 14px;cursor:pointer}
+  .chap-head .lth{flex:1}
+  .chap-head .lth .cn{font-family:'Shippori Mincho',serif;font-weight:700;font-size:14px}
+  .chap-head .lth .cs{font-size:11.5px;color:var(--ink-soft);margin-top:2px}
+  .chap.open .exp{transform:rotate(90deg);color:var(--accent)}
+  .chap-body{display:none;padding:0 14px 14px 14px}
+  .chap.open .chap-body{display:block}
+  .chap-body img{width:100%;border:1px solid var(--line);border-radius:8px;margin-top:10px;display:block;background:#fff}
+  .chap-body .nopage{font-size:12px;color:var(--ink-soft);padding:12px;text-align:center;border:1px dashed var(--line);border-radius:8px;margin-top:10px;line-height:1.6}
+  .chap-body .ltools{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(120px);
     background:var(--ink);color:#fbf8f1;padding:13px 24px;border-radius:13px;font-size:13.5px;
     box-shadow:0 12px 30px -8px rgba(0,0,0,.4);transition:.4s cubic-bezier(.2,1.3,.4,1);z-index:60;
@@ -159,7 +174,7 @@
         <div class="pbar"><i id="pbar"></i></div>
         <div class="pnum" id="pnum">0 / 26 课</div>
       </div>
-      <div class="hint">线性主线，照书一课课推进。学完一课点左侧勾，进度条往前走。点课次可展开看本课语法点、记笔记、或一键生成给 AI 的提问。<b>书供内容，AI 供互动。</b></div>
+      <div class="hint">线性主线，照书一课课推进。学完一课点左侧勾，进度条往前走。点课次可展开看本课语法点、<b>书页内容</b>、记笔记、或一键生成给 AI 的提问。<b>书供内容，AI 供互动。</b><br>📖 内容页按需放：练到哪课，把书页导出成图片放进 <b>n2_grammar/</b>（命名如 l4-p1.jpg），在 n2_grammar_data.js 给该课加 pages 字段。第1-3课已放样板。</div>
       <div id="lessons"></div>
     </div>
   </div>
@@ -205,33 +220,29 @@
   <!-- ===== 听力·材料 ===== -->
   <div class="panel" id="p-material">
     <div class="card">
-      <h2>🎧 听力主线</h2>
-      <div class="hint">先用 N4 听力找回耳感，后期换 N2。所有听力<b>第一遍先盲听（不看原文）</b>，再对原文。</div>
-      <div class="note-box">⚠️ 你的《新完全掌握 N4 听力》的<b>音频和听力原文译文</b>不在书里，需要<b>扫描纸质书封面的二维码</b>获取。先去拿到音频，盲听才有材料。</div>
+      <h2>🎧 N4 听力主线</h2>
+      <div class="progress-top">
+        <div class="pbar"><i id="lbar"></i></div>
+        <div class="pnum" id="lnum">0 / 6 章</div>
+      </div>
+      <div class="hint">先用 N4 找回耳感，后期换 N2。<b>第一遍先盲听（不看原文），再对原文。</b>音频扫书封面二维码、用手机播放。点章节展开看内容页、记笔记、消化听不懂的点。</div>
+      <div class="note-box">📖 内容页按需放入：练到哪章，把那几页从 PDF 导出成图片放进 <b>n4_listening/</b> 文件夹（命名如 ch2-p1.jpg），并在 n4_listening_data.js 里把该章 pages 填上文件名，push 即可显示。第Ⅰ章已放好做样板。</div>
+      <div id="chapters"></div>
+    </div>
+    <div class="card">
+      <h2>🔗 其他听力·材料</h2>
       <a class="mat" href="https://www3.nhk.or.jp/news/easy/" target="_blank" rel="noopener">
         <div class="mic">聞</div>
         <div><div class="mt">NHK News Easy</div><div class="md">简化新闻带注音带音频，挖矿+盲听日常材料</div></div>
       </a>
       <a class="mat" href="https://ankiweb.net" target="_blank" rel="noopener">
         <div class="mic g">語</div>
-        <div><div class="mt">Anki（背景复习）</div><div class="md">现成 N2/N3 卡组继续过，新词走左边笔记本</div></div>
+        <div><div class="mt">Anki（背景复习）</div><div class="md">现成 N2/N3 卡组继续过，新词走笔记本</div></div>
       </a>
       <a class="mat" href="index.html">
         <div class="mic d">記</div>
-        <div><div class="mt">每日打卡 · 盲听评分</div><div class="md">回到日语入口的打卡页，记录盲听自评和日记</div></div>
+        <div><div class="mt">每日打卡 · 盲听评分</div><div class="md">回日语入口打卡页，记录盲听自评和日记</div></div>
       </a>
-    </div>
-    <div class="card">
-      <h2>📐 N4 听力书结构</h2>
-      <div class="hint">书里按题型分章训练，照着一章章练即可：</div>
-      <div style="font-size:12.5px;line-height:1.9;color:var(--ink)">
-        Ⅰ 熟悉日语语音（辨析相似音、音调高低、基础词）<br>
-        Ⅱ 「语言表达」解题技巧（判断行为人是谁、搭话说法）<br>
-        Ⅲ 「即时应答」解题技巧（难判断的句型、常用应答）<br>
-        Ⅳ 「课题理解/理解主旨」解题技巧<br>
-        Ⅴ 「要点理解」解题技巧<br>
-        模拟试验 + 答案与听力原文
-      </div>
     </div>
   </div>
 </div>
@@ -244,7 +255,7 @@ const todayStr=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.get
 
 // ---------- 状态 ----------
 const KEY='jp_workbench_v1';
-let st={grammar:{},notes:[],noteSeq:1};
+let st={grammar:{},notes:[],noteSeq:1,listening:{}};
 function save(){ Store.save(KEY, st); }
 
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2600);}
@@ -290,6 +301,7 @@ function renderGrammar(){
         </div>
         <div class="lesson-body">
           ${ls.points.map(p=>`<div class="pt">・${p}</div>`).join('')}
+          ${ls.pages&&ls.pages.length?ls.pages.map(p=>`<img src="n2_grammar/${p}" alt="${ls.n}课内容页" loading="lazy" style="width:100%;border:1px solid var(--line);border-radius:8px;margin-top:10px;display:block;background:#fff">`).join(''):''}
           <textarea class="note-in" data-note="${k}" placeholder="本课重点 / 我的易错处…">${dd.note||''}</textarea>
           <button class="ask" data-ask="${pi}-${li}">让 AI 帮我讲解本课语法 →</button>
         </div>`;
@@ -317,6 +329,51 @@ function bindGrammar(){
     const ls=N2_GRAMMAR.parts[pi].lessons[li];
     const prompt=`我在学《新完全掌握 N2 语法》第${ls.n}课「${ls.theme}」，本课语法点：\n${ls.points.map(p=>'・'+p).join('\n')}\n\n请帮我：①逐个简明解释这些语法点的意思和接续；②每个给一个 N2 难度的例句（带中文）；③指出其中最容易混淆的两个，讲清区别。最后给我一句话记忆口诀。`;
     copy(prompt);
+  });
+}
+
+// ---------- 听力章节 ----------
+function renderListening(){
+  const box=$('#chapters');if(!box)return;box.innerHTML='';
+  let done=0;const total=N4_LISTENING.chapters.length;
+  N4_LISTENING.chapters.forEach(ch=>{
+    const dd=st.listening[ch.id]||{done:false};
+    if(dd.done)done++;
+    const el=document.createElement('div');
+    el.className='chap'+(dd.done?' done':'');
+    const pagesHTML = ch.pages && ch.pages.length
+      ? ch.pages.map(p=>`<img src="n4_listening/${p}" alt="${ch.name} 内容页" loading="lazy">`).join('')
+      : `<div class="nopage">本章内容页还没放。练到这章时，把书页导出成图片放进 n4_listening/ 文件夹（命名如 ch${ch.id}-p1.jpg），在 n4_listening_data.js 里填上文件名再 push。</div>`;
+    el.innerHTML=`
+      <div class="chap-head">
+        <div class="lck" data-ldone="${ch.id}">${checkSVG}</div>
+        <div class="lth"><div class="cn">${ch.name}</div><div class="cs">${ch.sub}</div></div>
+        <div class="exp" data-lexp="${ch.id}">›</div>
+      </div>
+      <div class="chap-body">
+        ${pagesHTML}
+        <div class="ltools">
+          <button class="btn ghost sm" data-lask="${ch.id}">听不懂的句子发我帮你拆 →</button>
+        </div>
+      </div>`;
+    box.appendChild(el);
+  });
+  $('#lnum').textContent=done+' / '+total+' 章';
+  $('#lbar').style.width=(total?done/total*100:0)+'%';
+  bindListening();
+}
+function bindListening(){
+  $$('[data-ldone]').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();const id=b.dataset.ldone;
+    st.listening[id]=st.listening[id]||{done:false};
+    st.listening[id].done=!st.listening[id].done;save();renderListening();
+  });
+  $$('[data-lexp]').forEach(b=>b.onclick=()=>b.closest('.chap').classList.toggle('open'));
+  $$('.chap-head .lth').forEach(t=>t.onclick=()=>t.closest('.chap').classList.toggle('open'));
+  $$('[data-lask]').forEach(b=>b.onclick=()=>{
+    const ch=N4_LISTENING.chapters.find(c=>c.id==b.dataset.lask);
+    const p=`我在练《新完全掌握 N4 听力》${ch.name}（${ch.sub}）。我盲听时有一句没听懂，下面是那句话（或我听到的音）：\n\n【在这里贴上你没听懂的句子】\n\n请帮我：①拆解它的连读、缩约音、吞音（听不懂往往是因为这个，不是不认识词）②标注假名读音 ③解释意思 ④告诉我下次听到类似的怎么抓。`;
+    copy(p);
   });
 }
 
@@ -434,7 +491,8 @@ fillLessonSelect();
 (async ()=>{
   const loaded = await Store.load(KEY);
   if(loaded) st = loaded;
-  renderGrammar();renderNotes();
+  if(!st.listening) st.listening={};
+  renderGrammar();renderNotes();renderListening();
   if(Store.cloudEnabled) toast('☁ 云同步已开启');
 })();
 

@@ -9,7 +9,10 @@ study-hub/
 ├── index.html            # 总入口（三摊汇总）
 ├── japanese/
 │   ├── index.html        # 日语入口（打卡/Anki/NHK/批改 四卡片）
-│   └── checkin.html       # 日语每日打卡（localStorage 存储，含听力两轮锁、日记本）
+│   ├── commute.html      # 通勤学习模式（N4 音频、流程、记录）
+│   ├── audio/n4/         # TRY! N4 本地音频
+│   ├── materials/try-n4-grammar.pdf  # N4 教材阅读入口
+│   └── checkin.html      # 日语每日打卡（localStorage 存储，含听力两轮锁、日记本）
 ├── music/
 │   └── index.html        # 音乐入口（占位，待填实链接）
 └── film/

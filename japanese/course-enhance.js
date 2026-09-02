@@ -138,3 +138,139 @@ function renderCourseNotes() {
 }
 
 renderCourseNotes();
+
+const coursePages = [
+  [36, 49], [50, 67], [68, 85], [86, 102], [103, 119],
+  [120, 133], [134, 149], [150, 161], [162, 171], [171, 171]
+];
+const audioByPage = {
+  16: [2, 3, 4, 5, 6, 7, 8, 9], 18: [10], 26: [11],
+  36: [15], 42: [16], 49: [17, 18], 50: [19], 60: [20], 67: [21, 22],
+  68: [23], 79: [24], 84: [25], 85: [26, 27, 28], 86: [29], 92: [30],
+  102: [31, 32, 33, 34, 35], 103: [36], 110: [37], 119: [38, 39, 40, 41],
+  120: [42], 127: [43], 133: [44, 45, 46, 47, 48], 134: [49], 142: [50],
+  149: [51, 52], 150: [53], 156: [54], 161: [55, 56, 57, 58],
+  171: Array.from({length: 29}, (_, i) => i + 59)
+};
+const audioSrc = track => `audio/n4/Track${String(track).padStart(3, '0')}.mp3`;
+
+function normalizeCoursePages() {
+  document.querySelectorAll('.course-block').forEach((block, index) => {
+    const desired = coursePages[index];
+    if (!desired) return;
+    const grid = block.querySelector('.page-grid');
+    const existing = new Map([...grid.querySelectorAll('.page-card')].map(card => {
+      const match = card.querySelector('h5')?.textContent.match(/(\d+)/);
+      return [match ? Number(match[1]) : 0, card];
+    }));
+    grid.innerHTML = '';
+    for (let page = desired[0]; page <= desired[1]; page += 1) {
+      let card = existing.get(page);
+      if (!card) {
+        card = document.createElement('article');
+        card.className = 'page-card';
+        card.innerHTML = `<img class="book-page" loading="lazy" src="materials/week-page${page}.png" alt="TRY! N4 教材第${page}页"><h5>教材第 ${page} 页</h5>`;
+      }
+      grid.appendChild(card);
+    }
+  });
+}
+
+function addPageAudio() {
+  document.querySelectorAll('.page-card').forEach(card => {
+    const match = card.querySelector('h5')?.textContent.match(/(\d+)/);
+    const tracks = match ? audioByPage[Number(match[1])] : null;
+    if (!tracks || card.querySelector('.page-audio')) return;
+    const player = document.createElement('div');
+    player.className = 'page-audio';
+    player.innerHTML = `<label>本页音频 · ${tracks.map(t => `Track${String(t).padStart(3, '0')}`).join('、')}</label><select aria-label="选择本页音轨">${tracks.map(t => `<option value="${t}">播放 Track${String(t).padStart(3, '0')}</option>`).join('')}</select><audio controls preload="none" src="${audioSrc(tracks[0])}"></audio>`;
+    card.appendChild(player);
+    const select = player.querySelector('select');
+    const audio = player.querySelector('audio');
+    select.addEventListener('change', () => { audio.src = audioSrc(Number(select.value)); });
+    audio.addEventListener('ended', () => {
+      const chain = document.querySelector('#chainAudio');
+      if (!chain?.checked) return;
+      const current = tracks.indexOf(Number(select.value));
+      if (current < tracks.length - 1) {
+        select.value = tracks[current + 1];
+        audio.src = audioSrc(tracks[current + 1]);
+        audio.play().catch(() => {});
+        return;
+      }
+      const players = [...document.querySelectorAll('.page-audio audio')];
+      const next = players[players.indexOf(audio) + 1];
+      if (next) next.play().catch(() => {});
+    });
+  });
+}
+
+function addPlayerToggle() {
+  const anchor = document.querySelector('#sprintDays');
+  if (!anchor || document.querySelector('#chainAudio')) return;
+  anchor.insertAdjacentHTML('beforebegin', '<div class="player-tools"><label><input id="chainAudio" type="checkbox" checked> 音频自动连播</label><span>当前页播放完后，自动进入本页下一条或下一张有音频的教材页</span></div>');
+}
+
+function setupSwipeViewer() {
+  const viewer = document.querySelector('#viewer');
+  const image = document.querySelector('#viewerImage');
+  if (!viewer || !image) return;
+  const prev = document.createElement('button');
+  prev.className = 'viewer-prev';
+  prev.type = 'button';
+  prev.setAttribute('aria-label', '上一张');
+  prev.textContent = '‹';
+  const next = document.createElement('button');
+  next.className = 'viewer-next';
+  next.type = 'button';
+  next.setAttribute('aria-label', '下一张');
+  next.textContent = '›';
+  const count = document.createElement('div');
+  count.className = 'viewer-count';
+  viewer.append(prev, next, count);
+  let gallery = [];
+  let index = 0;
+  let startX = 0;
+  const update = () => {
+    const current = gallery[index];
+    if (!current) return;
+    image.src = current.src;
+    image.alt = current.alt;
+    count.textContent = `${index + 1} / ${gallery.length}`;
+    prev.hidden = gallery.length < 2;
+    next.hidden = gallery.length < 2;
+  };
+  const move = offset => {
+    if (!gallery.length) return;
+    index = (index + offset + gallery.length) % gallery.length;
+    update();
+  };
+  const open = target => {
+    const scope = target.closest('.course-block') || target.closest('.lesson-card') || document.body;
+    gallery = [...scope.querySelectorAll('.book-page')];
+    index = Math.max(0, gallery.indexOf(target));
+    viewer.classList.add('on');
+    update();
+  };
+  document.addEventListener('click', event => {
+    if (event.target.matches('.book-page')) open(event.target);
+  });
+  prev.addEventListener('click', event => { event.stopPropagation(); move(-1); });
+  next.addEventListener('click', event => { event.stopPropagation(); move(1); });
+  viewer.addEventListener('touchstart', event => { startX = event.changedTouches[0].screenX; }, {passive: true});
+  viewer.addEventListener('touchend', event => {
+    const distance = event.changedTouches[0].screenX - startX;
+    if (Math.abs(distance) > 45) move(distance < 0 ? 1 : -1);
+  }, {passive: true});
+  document.addEventListener('keydown', event => {
+    if (!viewer.classList.contains('on')) return;
+    if (event.key === 'ArrowLeft') move(-1);
+    if (event.key === 'ArrowRight') move(1);
+    if (event.key === 'Escape') viewer.classList.remove('on');
+  });
+}
+
+normalizeCoursePages();
+addPageAudio();
+addPlayerToggle();
+setupSwipeViewer();

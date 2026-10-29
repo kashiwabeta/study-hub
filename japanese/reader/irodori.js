@@ -1,0 +1,14 @@
+const topics=[
+['レストランで働いています','我在餐厅工作','お久しぶりです。','好久不见。','久しぶりに会った人に、何と言いますか。','お久しぶりです。'],
+['ゲームをするのが好きです','我喜欢玩游戏','音楽を聞くのが好きです。','我喜欢听音乐。','「〜のが好きです」は何を言うときに使いますか。','喜欢做某事。'],
+['冬はとても寒くなります','冬天会变得很冷','冬は寒くなります。','冬天会变冷。','「寒くなります」は何が変わりますか。','表示天气变冷。'],
+['昨日はすごい雨でしたね','昨天下了好大的雨','昨日は雨でしたね。','昨天下雨了呢。','「昨日」はいつですか。','昨天。'],
+['とてもにぎやかで便利です','非常热闹方便','この町は便利です。','这个城镇很方便。','「便利」の反対は何ですか。','不便（ふべん）。'],
+['郵便局はどう行ったらいいですか？','请问邮局怎么走？','駅はどう行ったらいいですか。','请问车站怎么走？','道をたずねるとき、どう言いますか。','「〜はどう行ったらいいですか」と聞けます。'],
+['道に迷ってちょっと遅れます','迷路了，会晚一点到','道に迷って、少し遅れます。','迷路了，会晚一点到。','「遅れます」はどんな意味ですか。','迟到、晚到。'],
+['野球、したことありますか？','你打过棒球吗？','日本に行ったことがありますか。','你去过日本吗？','「〜たことがありますか」は何を聞きますか。','询问有没有某种经历。'],
+['読み方を教えてもらえませんか？','能教我怎么读吗？','読み方を教えてもらえませんか。','能教我怎么读吗？','「教えてもらえませんか」は何をする表現ですか。','礼貌地请求对方教自己。'],
+['日本語教室に参加したいんですが…','我想参加日语教室……','日本語を勉強したいんですが。','我想学日语……','「〜たい」表示什么？','表示说话人的愿望：想做……。']];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const out=document.getElementById('lessons');fetch('irodori/tracks.json').then(r=>{if(!r.ok)throw Error('课程数据加载失败');return r.json()}).then(data=>{out.innerHTML=data.map((d,i)=>{let t=topics[i];return `<details class="lesson"><summary>第 ${i+1} 课 · ${esc(t[1])}</summary><p>${esc(t[0])}</p><div class="section"><span class="tag">站着听</span><p>选教材中的编号，先听一段，注意人物、地点和要做的事。</p><select aria-label="选择第 ${i+1} 课音轨">${d.tracks.map((x,k)=>`<option value="${esc(x.src)}">${esc(x.label.replace(/^Y_\[/,'').replace(/\]_/,' · ').replace(/\.mp3$/,''))}</option>`).join('')}</select><audio controls preload="none" src="${esc(d.tracks[0].src)}"></audio><label class="tiny"><input type="checkbox" checked> 本课音轨连续播放</label><p class="tiny">kiku：听一听；kaiwa：对话；hanasu：口语练习；kotoba：词语；katachi：句型。</p></div><div class="section"><span class="tag">坐着学</span><h3>重点表达</h3><p>${esc(t[2])}</p><details class="answer"><summary>中文解释</summary><p>${esc(t[3])}</p></details><div class="quiz"><b>小练习</b><p>${esc(t[4])}</p><details class="answer"><summary>看答案</summary><p>${esc(t[5])}</p></details></div><p class="tiny">此处是辅助例句；完整对话原文和本课练习请打开官方教材。</p><div class="actions"><a class="button" href="${esc(d.pdf)}">打开第 ${i+1} 课中文教材</a><a class="button" href="https://www.irodori.jpf.go.jp/assets/data/elementary01/pdf/Y_answer.pdf">核对官方答案</a></div></div></details>`}).join('')}).catch(()=>{out.textContent='课程列表加载失败，请检查网络并刷新。'});
+out.addEventListener('change',e=>{if(e.target.tagName==='SELECT'){let a=e.target.parentElement.querySelector('audio');a.src=e.target.value;a.load()}});out.addEventListener('ended',e=>{if(e.target.tagName==='AUDIO'){let box=e.target.parentElement,sel=box.querySelector('select');if(box.querySelector('input').checked&&sel.selectedIndex<sel.options.length-1){sel.selectedIndex++;e.target.src=sel.value;e.target.play().catch(()=>{})}}},true);

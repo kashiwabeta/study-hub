@@ -24,6 +24,10 @@ study-hub/
 仓库设置 → Pages → 选 main 分支根目录即可。
 访问 `https://<用户名>.github.io/study-hub/`。
 
+## 独立原型预览
+
+- [TRY! 日本語听力工作台](prototype/try-listening-workbench/)（独立试用，不替换现有日语工作台）
+
 ## 待办（替换占位链接）
 
 - `music/index.html` 里的 `#REPLACE_练习打卡` → 音乐打卡页地址

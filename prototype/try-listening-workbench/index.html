@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4efe6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="日本語 · 今日">
+  <title>日本語 · 今日の一課</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#2b2724;
+      --ink-soft:#70675f;
+      --paper:#f4efe6;
+      --paper-deep:#e9dfcf;
+      --card:#fbf8f1;
+      --line:#ddd2bf;
+      --accent:#c1543a;
+      --accent-dark:#9f3f2b;
+      --accent-soft:#f0d9cf;
+      --gold:#bd8d3f;
+      --green:#5f7a52;
+      --green-soft:#dde7d6;
+      --indigo:#596684;
+      --shadow:0 1px 0 rgba(255,255,255,.8) inset,0 18px 44px -28px rgba(60,45,30,.55);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{margin:0;min-height:100vh;color:var(--ink);background:var(--paper);font-family:'Zen Maru Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased;background-image:radial-gradient(circle at 8% 2%,rgba(193,84,58,.09),transparent 36%),radial-gradient(circle at 92% 0,rgba(189,141,63,.11),transparent 40%),radial-gradient(circle at 50% 108%,var(--paper-deep),transparent 60%);padding-bottom:calc(92px + env(safe-area-inset-bottom));}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;background-image:radial-gradient(rgba(80,65,50,.075) .7px,transparent .7px);background-size:4px 4px}
+    button,a,input{font:inherit}
+    button{color:inherit}
+    .shell{position:relative;z-index:1;width:min(100%,680px);margin:0 auto;padding:0 20px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:28px 0 12px}
+    .brand{display:flex;align-items:center;gap:11px}
+    .seal{display:grid;place-items:center;width:38px;height:38px;border-radius:9px;background:linear-gradient(145deg,var(--accent),var(--accent-dark));color:#fff;font-family:'Shippori Mincho',serif;font-weight:800;font-size:17px;box-shadow:0 8px 18px -12px var(--accent-dark)}
+    .brand-copy strong{display:block;font-family:'Shippori Mincho',serif;font-size:15px;letter-spacing:.08em}
+    .brand-copy span{display:block;color:var(--ink-soft);font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
+    .today-date{font-family:'Shippori Mincho',serif;color:var(--gold);font-size:12px;letter-spacing:.06em}
+    .view{display:none;animation:fade .28s ease}
+    .view.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+    .greeting{padding:30px 2px 24px}
+    .eyebrow{font-family:'Shippori Mincho',serif;color:var(--accent-dark);font-size:12px;letter-spacing:.32em;margin-bottom:10px}
+    h1,h2,h3,p{margin:0}
+    h1{font-family:'Shippori Mincho',serif;font-size:clamp(34px,10vw,52px);line-height:1.14;letter-spacing:.03em}
+    .greeting p{color:var(--ink-soft);font-size:13px;line-height:1.75;margin-top:10px}
+    .stage-strip{display:flex;align-items:center;gap:12px;background:rgba(251,248,241,.66);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px}
+    .stage-dot{width:9px;height:9px;border-radius:99px;background:var(--green);box-shadow:0 0 0 5px var(--green-soft)}
+    .stage-strip div{flex:1}
+    .stage-strip b{font-family:'Shippori Mincho',serif;font-size:13px}
+    .stage-strip span{display:block;color:var(--ink-soft);font-size:11px;margin-top:2px}
+    .stage-strip small{font-size:10px;color:var(--green);border:1px solid rgba(95,122,82,.3);background:var(--green-soft);border-radius:999px;padding:4px 8px;white-space:nowrap}
+
+    .lesson-card{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:25px 22px 22px;box-shadow:var(--shadow)}
+    .lesson-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--accent)}
+    .lesson-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+    .lesson-index{font-family:'Shippori Mincho',serif;color:var(--accent-dark);font-size:12px;font-weight:700;letter-spacing:.16em}
+    .time-pill{font-size:11px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:5px 9px;background:#fffaf2;white-space:nowrap}
+    .lesson-card h2{font-family:'Shippori Mincho',serif;font-size:26px;margin-top:9px;letter-spacing:.02em}
+    .lesson-card h2 ruby rt{font-family:'Zen Maru Gothic',sans-serif;font-size:8px;font-weight:400}
+    .lesson-desc{font-size:12px;color:var(--ink-soft);margin-top:7px;line-height:1.65}
+    .lesson-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:19px 0}
+    .meta-cell{background:#f3ecdf;border:1px solid #e5dac8;border-radius:12px;padding:10px 8px;text-align:center}
+    .meta-cell small{display:block;color:var(--ink-soft);font-size:9.5px;margin-bottom:3px}
+    .meta-cell b{font-family:'Shippori Mincho',serif;font-size:13px}
+    .primary,.secondary,.ghost{border:0;cursor:pointer;transition:.2s ease}
+    .primary{width:100%;min-height:52px;border-radius:15px;background:linear-gradient(145deg,var(--accent),var(--accent-dark));color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em;box-shadow:0 12px 25px -16px var(--accent-dark)}
+    .primary:hover,.primary:active{transform:translateY(-2px);box-shadow:0 16px 28px -16px var(--accent-dark)}
+    .primary:disabled{opacity:.45;transform:none;cursor:not-allowed}
+    .quick{display:flex;justify-content:center;margin-top:12px}
+    .ghost{background:none;color:var(--accent-dark);font-size:11.5px;padding:5px 9px;border-bottom:1px solid var(--line)}
+    .below-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:14px}
+    .mini-card{background:rgba(251,248,241,.76);border:1px solid var(--line);border-radius:16px;padding:15px;min-height:118px}
+    .mini-card h3{font-family:'Shippori Mincho',serif;font-size:13px;margin-bottom:9px}
+    .mini-card p{font-size:11px;color:var(--ink-soft);line-height:1.65}
+    .meter{height:7px;border-radius:99px;background:#e8decd;overflow:hidden;margin:11px 0 7px}
+    .meter span{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--green),#829b75);border-radius:99px}
+    .mini-value{font-family:'Shippori Mincho',serif;font-size:24px;color:var(--accent-dark)}
+    .mini-label{font-size:10px;color:var(--ink-soft)}
+    .last-note{display:flex;gap:8px;align-items:flex-start}
+    .last-note i{font-style:normal;color:var(--gold)}
+
+    .page-head{padding:24px 2px 18px}
+    .page-head h1{font-size:34px}
+    .page-head p{font-size:12px;line-height:1.65;color:var(--ink-soft);margin-top:7px}
+    .progress-list{display:flex;flex-direction:column;gap:10px}
+    .progress-row{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px}
+    .progress-num{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:var(--accent-soft);color:var(--accent-dark);font-family:'Shippori Mincho',serif;font-weight:700}
+    .progress-row b{font-family:'Shippori Mincho',serif;font-size:13px}
+    .progress-row span{display:block;color:var(--ink-soft);font-size:10.5px;margin-top:3px}
+    .progress-row small{font-size:10px;color:var(--green)}
+    .empty{border:1px dashed var(--line);border-radius:16px;padding:28px 18px;text-align:center;color:var(--ink-soft);font-size:12px;line-height:1.8;background:rgba(251,248,241,.5)}
+    .setting-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px}
+    .setting-card h3{font-family:'Shippori Mincho',serif;font-size:15px;margin-bottom:5px}
+    .setting-card p{font-size:11px;color:var(--ink-soft);line-height:1.65}
+    .setting-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+    .setting-links a,.danger{font-size:11px;color:var(--accent-dark);text-decoration:none;border:1px solid var(--line);border-radius:999px;background:#fffaf2;padding:7px 11px}
+    .danger{cursor:pointer}
+
+    .bottom-nav{position:fixed;z-index:30;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(calc(100% - 24px),640px);display:grid;grid-template-columns:repeat(4,1fr);background:rgba(251,248,241,.94);border:1px solid var(--line);border-radius:18px;padding:6px;box-shadow:0 16px 35px -20px rgba(50,40,30,.7);backdrop-filter:blur(12px)}
+    .nav-btn{border:0;background:none;border-radius:12px;padding:8px 4px;color:var(--ink-soft);font-size:10px;cursor:pointer}
+    .nav-btn b{display:block;font-family:'Shippori Mincho',serif;font-size:15px;margin-bottom:2px;font-weight:600}
+    .nav-btn.active{background:var(--card);color:var(--accent-dark);box-shadow:0 5px 14px -11px rgba(50,40,30,.8)}
+
+    .flow{position:fixed;z-index:50;inset:0;display:none;background:var(--paper);overflow:auto;padding-bottom:40px}
+    .flow.open{display:block;animation:fade .25s ease}
+    .flow-shell{width:min(100%,640px);margin:0 auto;padding:0 20px}
+    .flow-top{position:sticky;top:0;z-index:5;background:rgba(244,239,230,.93);backdrop-filter:blur(10px);padding:19px 0 14px;border-bottom:1px solid rgba(221,210,191,.75)}
+    .flow-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .close-flow{width:34px;height:34px;border:1px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer;color:var(--ink-soft)}
+    .flow-title div{flex:1}
+    .flow-title b{font-family:'Shippori Mincho',serif;font-size:14px}
+    .flow-title span{display:block;font-size:10px;color:var(--ink-soft);margin-top:2px}
+    .flow-count{font-family:'Shippori Mincho',serif;color:var(--accent-dark);font-size:12px}
+    .flow-meter{height:4px;border-radius:99px;background:#e1d7c7;margin-top:13px;overflow:hidden}
+    .flow-meter span{display:block;width:20%;height:100%;border-radius:99px;background:var(--accent);transition:.3s}
+    .step-panel{display:none;padding:34px 0 28px}
+    .step-panel.active{display:block;animation:fade .25s ease}
+    .step-kicker{font-family:'Shippori Mincho',serif;font-size:11px;letter-spacing:.26em;color:var(--accent-dark)}
+    .step-panel h2{font-family:'Shippori Mincho',serif;font-size:30px;margin-top:9px}
+    .step-lead{font-size:12px;line-height:1.8;color:var(--ink-soft);margin-top:10px}
+    .instruction{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin:21px 0 15px;box-shadow:var(--shadow)}
+    .instruction b{font-family:'Shippori Mincho',serif;font-size:14px}
+    .instruction p{font-size:11px;line-height:1.7;color:var(--ink-soft);margin-top:6px}
+    .audio-links{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+    .audio-links a{display:block;text-align:center;text-decoration:none;color:var(--accent-dark);font-size:11px;border:1px solid var(--line);border-radius:11px;background:#fffaf2;padding:10px 7px}
+    .question{font-family:'Shippori Mincho',serif;font-size:14px;margin:22px 0 10px}
+    .options{display:grid;gap:8px}
+    .option{border:1px solid var(--line);border-radius:13px;background:var(--card);padding:13px 14px;text-align:left;cursor:pointer;font-size:12px;transition:.18s}
+    .option:hover,.option.selected{border-color:var(--accent);background:#fff7f2;color:var(--accent-dark);transform:translateX(2px)}
+    .option span{float:right;color:var(--ink-soft);font-size:10px}
+    .tag-grid{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);border-radius:999px;background:var(--card);padding:8px 11px;cursor:pointer;font-size:11px;color:var(--ink-soft)}
+    .tag.selected{background:var(--green-soft);border-color:#b9cbb0;color:#405b35}
+    .counter{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+    .rep{height:74px;border:1px solid var(--line);border-radius:16px;background:var(--card);cursor:pointer;color:var(--ink-soft)}
+    .rep b{display:block;font-family:'Shippori Mincho',serif;font-size:19px;margin-bottom:3px}
+    .rep.done{background:var(--green-soft);border-color:#b9cbb0;color:#405b35}
+    .score-wrap{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;margin:16px 0}
+    .score-wrap input{flex:1;accent-color:var(--accent)}
+    .score{width:54px;text-align:center;font-family:'Shippori Mincho',serif;font-size:21px;color:var(--accent-dark)}
+    .flow-actions{display:flex;gap:10px;margin-top:28px}
+    .secondary{min-height:50px;min-width:94px;border:1px solid var(--line);background:var(--card);border-radius:14px;color:var(--ink-soft)}
+    .flow-actions .primary{flex:1;width:auto}
+    .complete-mark{width:78px;height:78px;margin:0 auto 17px;border-radius:24px;display:grid;place-items:center;background:var(--green-soft);color:var(--green);font-family:'Shippori Mincho',serif;font-size:35px}
+    .result-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin:20px 0}
+    .result-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #e9dfd0;font-size:11px;color:var(--ink-soft)}
+    .result-row:last-child{border:0}
+    .result-row b{color:var(--ink);font-weight:500}
+    .switch-banner{display:none;margin-top:14px;background:var(--green-soft);border:1px solid #b9cbb0;border-radius:16px;padding:15px;font-size:11px;line-height:1.7;color:#405b35}
+    .toast{position:fixed;z-index:80;left:50%;bottom:105px;transform:translate(-50%,140px);background:var(--ink);color:var(--card);border-radius:12px;padding:11px 18px;font-size:11px;transition:.35s;box-shadow:0 12px 28px -12px rgba(0,0,0,.5)}
+    .toast.show{transform:translate(-50%,0)}
+    @media (max-width:430px){.topbar{padding-top:20px}.greeting{padding-top:22px}.below-grid{grid-template-columns:1fr}.lesson-card{padding-left:20px}.audio-links{grid-template-columns:1fr}.flow-shell,.shell{padding-left:16px;padding-right:16px}}
+    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="seal">語</div>
+        <div class="brand-copy"><strong>日本語</strong><span>learning hub</span></div>
+      </div>
+      <div class="today-date" id="todayDate"></div>
+    </header>
+
+    <section class="view active" data-view="today">
+      <div class="greeting">
+        <div class="eyebrow">今日の一課</div>
+        <h1 id="greeting">こんばんは。</h1>
+        <p>不用决定学什么。今晚只把这一课，从纸面搬回声音里。</p>
+      </div>
+      <div class="stage-strip">
+        <span class="stage-dot"></span>
+        <div><b>N4 听力恢复期</b><span>连续两课达标后，建议进入 TRY! N3</span></div>
+        <small id="stageDay">第 1 天</small>
+      </div>
+      <article class="lesson-card">
+        <div class="lesson-top"><span class="lesson-index">TRY! N4 · 第 1 课</span><span class="time-pill" id="timePill">约 28 分钟</span></div>
+        <h2>あいさつの<ruby>言葉<rt>ことば</rt></ruby></h2>
+        <p class="lesson-desc">用基本寒暄和固定表达作出自然回应。先盲听，再打开教材。</p>
+        <div class="lesson-meta">
+          <div class="meta-cell"><small>书本页码</small><b>16–17</b></div>
+          <div class="meta-cell"><small>音轨</small><b>02–09</b></div>
+          <div class="meta-cell"><small>今日流程</small><b>5 步</b></div>
+        </div>
+        <button class="primary" id="startStudy">开始今天的学习</button>
+        <div class="quick"><button class="ghost" id="quickMode">今天很累？切换 10 分钟快速模式</button></div>
+      </article>
+      <div class="below-grid">
+        <article class="mini-card">
+          <h3>N4 → N3 退出标准</h3>
+          <p>首听 ≥70% · 对照后能完整跟上 · 练习 ≥80% · 完成跟读。</p>
+          <div class="meter"><span id="criteriaMeter"></span></div>
+          <p id="criteriaText">完成第一课后开始判断</p>
+        </article>
+        <article class="mini-card">
+          <h3>本周接触</h3>
+          <div class="mini-value" id="weekCount">0 / 5</div>
+          <div class="mini-label">不追求连续，只看有没有回来</div>
+        </article>
+      </div>
+      <article class="mini-card" style="margin-top:12px;min-height:auto">
+        <h3>上次卡点</h3>
+        <div class="last-note"><i>◌</i><p id="lastIssue">还没有记录。第一课只需选出“耳朵为什么没接住”。</p></div>
+      </article>
+    </section>
+
+    <section class="view" data-view="progress">
+      <div class="page-head"><div class="eyebrow">学習の記録</div><h1>进度</h1><p>只记录真实表现，不用累计 XP，也不会因为断一天清零。</p></div>
+      <div class="progress-list" id="progressList"></div>
+    </section>
+
+    <section class="view" data-view="issues">
+      <div class="page-head"><div class="eyebrow">聞き取れなかったこと</div><h1>卡点</h1><p>只留下真正阻碍听懂的东西，避免把工作台变成第二本笔记。</p></div>
+      <div id="issueList"></div>
+    </section>
+
+    <section class="view" data-view="settings">
+      <div class="page-head"><div class="eyebrow">設定</div><h1>设置</h1><p>教材和音频继续由原渠道提供，网页只负责导航与记录。</p></div>
+      <article class="setting-card"><h3>当前路线</h3><p>TRY! N4 听力恢复期。达到退出标准后，由你确认是否切换到 N3，不会自动替你升级。</p></article>
+      <article class="setting-card"><h3>教材与官方音频</h3><p>原型不上传教材扫描页，也不复制出版社音频。</p><div class="setting-links"><a href="https://ask-books.com/book-details/?slug=9784866396330" target="_blank" rel="noopener">出版社资源</a><a href="https://open.spotify.com/show/6q16PF0mKi01r1w7Ur1MgW" target="_blank" rel="noopener">Spotify 音频</a></div></article>
+      <article class="setting-card"><h3>本机数据</h3><p>原型阶段记录仅保存在当前浏览器，不接入旧 Supabase 公共数据。</p><div class="setting-links"><button class="danger" id="resetData">清空原型记录</button></div></article>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主要页面">
+    <button class="nav-btn active" data-target="today"><b>今</b>今天</button>
+    <button class="nav-btn" data-target="progress"><b>路</b>进度</button>
+    <button class="nav-btn" data-target="issues"><b>点</b>卡点</button>
+    <button class="nav-btn" data-target="settings"><b>具</b>设置</button>
+  </nav>
+
+  <section class="flow" id="studyFlow" aria-hidden="true">
+    <div class="flow-shell">
+      <header class="flow-top">
+        <div class="flow-title"><button class="close-flow" id="closeFlow" aria-label="退出学习">×</button><div><b>あいさつの言葉</b><span id="flowModeLabel">标准模式 · 约 28 分钟</span></div><span class="flow-count" id="flowCount">1 / 5</span></div>
+        <div class="flow-meter"><span id="flowMeter"></span></div>
+      </header>
+
+      <div class="step-panel active" data-step="1">
+        <div class="step-kicker">STEP 01 · 聞く</div><h2>先不看课文，听两遍</h2><p class="step-lead">音轨 02–09。第一遍只抓情境，第二遍留意没接住的句尾。现在不要打开 PDF。</p>
+        <div class="instruction"><b>打开音频</b><p>工作台不会托管版权音频。选择你习惯的播放方式，播放完再回来评分。</p><div class="audio-links"><a href="https://ask-books.com/book-details/?slug=9784866396330" target="_blank" rel="noopener">出版社下载页</a><a href="https://open.spotify.com/show/6q16PF0mKi01r1w7Ur1MgW" target="_blank" rel="noopener">Spotify 播放</a></div></div>
+        <div class="question">第一遍大概听懂多少？</div>
+        <div class="options" data-choice="blind"><button class="option" data-value="30">30% 以下<span>只抓到零散词</span></button><button class="option" data-value="50">30–50%<span>知道大概情境</span></button><button class="option" data-value="70">50–70%<span>多数句子能跟上</span></button><button class="option" data-value="85">70% 以上<span>细节也比较清楚</span></button></div>
+        <div class="flow-actions"><button class="primary next" disabled>记录并继续</button></div>
+      </div>
+
+      <div class="step-panel" data-step="2">
+        <div class="step-kicker">STEP 02 · 読む</div><h2>现在打开教材第 16–17 页</h2><p class="step-lead">找出“明明看得懂，但刚才耳朵没听出来”的地方。无需抄写整页。</p>
+        <div class="instruction"><b>只选主要原因</b><p>可以多选，但最好不超过两个。记录越轻，越容易每天完成。</p></div>
+        <div class="tag-grid" data-tags><button class="tag">生词</button><button class="tag">连读或吞音</button><button class="tag">语速</button><button class="tag">语法反应慢</button><button class="tag">认识，但没听出来</button></div>
+        <div class="flow-actions"><button class="secondary back">上一步</button><button class="primary next">我对完文本了</button></div>
+      </div>
+
+      <div class="step-panel" data-step="3">
+        <div class="step-kicker">STEP 03 · 聞き直す</div><h2>对照后，再听一遍</h2><p class="step-lead">这次不求记住，只确认声音是否已经能和文字重新对上。</p>
+        <div class="question">现在能跟上到什么程度？</div>
+        <div class="options" data-choice="after"><button class="option" data-value="hard">仍然困难<span>需要逐句暂停</span></button><button class="option" data-value="most">能听出大部分<span>偶尔会漏掉</span></button><button class="option" data-value="full">已经能完整跟上<span>不用频繁暂停</span></button></div>
+        <div class="flow-actions"><button class="secondary back">上一步</button><button class="primary next" disabled>记录并继续</button></div>
+      </div>
+
+      <div class="step-panel" data-step="4">
+        <div class="step-kicker">STEP 04 · 声に出す</div><h2>挑一句，跟读三遍</h2><p class="step-lead">模仿节奏和句尾，不追求播音腔。快速模式完成一遍即可。</p>
+        <div class="counter"><button class="rep"><b>一</b>第 1 遍</button><button class="rep"><b>二</b>第 2 遍</button><button class="rep"><b>三</b>第 3 遍</button></div>
+        <div class="flow-actions"><button class="secondary back">上一步</button><button class="primary next" disabled>完成跟读</button></div>
+      </div>
+
+      <div class="step-panel" data-step="5">
+        <div class="step-kicker">STEP 05 · 終わる</div><h2>做完练习，就收工</h2><p class="step-lead">拖动填写大致正确率即可。今天不做额外整理，不补偿“学得不够多”。</p>
+        <div class="question">课后练习正确率</div>
+        <div class="score-wrap"><input id="scoreRange" type="range" min="0" max="100" step="5" value="80"><output class="score" id="scoreOutput">80%</output></div>
+        <div class="flow-actions"><button class="secondary back">上一步</button><button class="primary" id="finishStudy">完成今天这一课</button></div>
+      </div>
+
+      <div class="step-panel" data-step="6" style="text-align:center">
+        <div class="complete-mark">✓</div><div class="step-kicker">おつかれさまでした</div><h2>今天已经够了</h2><p class="step-lead">你完成的不是一次打卡，而是一次完整的“声音 → 文字 → 声音”闭环。</p>
+        <div class="result-card" id="resultCard"></div><div class="switch-banner" id="switchBanner">连续两课达到退出标准。下一次可以选择进入 TRY! N3 主线。</div>
+        <button class="primary" id="returnHome">返回今天</button>
+      </div>
+    </div>
+  </section>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const KEY='jp_try_prototype_v1';
+    const $=(s,r=document)=>r.querySelector(s);
+    const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+    const state=JSON.parse(localStorage.getItem(KEY)||'{"sessions":[],"quick":false}');
+    let draft={blind:null,after:null,tags:[],reps:0,score:80};
+    let currentStep=1;
+    const dateKey=()=>new Date().toISOString().slice(0,10);
+    const dateLabel=d=>new Intl.DateTimeFormat('zh-CN',{month:'numeric',day:'numeric',weekday:'short'}).format(new Date(d+'T12:00:00'));
+    const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+    const meets=s=>s.blind>=70&&s.after==='full'&&s.score>=80&&s.reps>=3;
+    function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
+    function initDate(){const d=new Date(),h=d.getHours();$('#greeting').textContent=h<11?'おはようございます。':h<18?'こんにちは。':'こんばんは。';$('#todayDate').textContent=new Intl.DateTimeFormat('ja-JP',{month:'long',day:'numeric',weekday:'short'}).format(d)}
+    function renderHome(){
+      const sessions=state.sessions||[];
+      $('#stageDay').textContent=`第 ${sessions.length+1} 天`;
+      const monday=new Date();monday.setHours(0,0,0,0);monday.setDate(monday.getDate()-((monday.getDay()+6)%7));
+      const week=sessions.filter(s=>new Date(s.date+'T12:00:00')>=monday).length;
+      $('#weekCount').textContent=`${week} / 5`;
+      const last=sessions.at(-1);$('#lastIssue').textContent=last&&last.tags.length?last.tags.join('、'):'还没有记录。第一课只需选出“耳朵为什么没接住”。';
+      const recent=sessions.slice(-2),passed=recent.filter(meets).length;
+      $('#criteriaMeter').style.width=`${Math.min(100,passed*50)}%`;
+      $('#criteriaText').textContent=recent.length<2?`还需 ${2-recent.length} 次记录才能判断`:(passed===2?'已达到切换建议':'继续用 N4 恢复耳朵');
+      const doneToday=sessions.some(s=>s.date===dateKey());$('#startStudy').textContent=doneToday?'今天已完成 · 仍可再练一次':'开始今天的学习';
+    }
+    function renderProgress(){const list=$('#progressList'),sessions=[...(state.sessions||[])].reverse();list.innerHTML=sessions.length?sessions.map((s,i)=>`<div class="progress-row"><div class="progress-num">${sessions.length-i}</div><div><b>あいさつの言葉</b><span>${dateLabel(s.date)} · 首听 ${s.blind}% · 练习 ${s.score}%</span></div><small>${meets(s)?'达到标准':'继续恢复'}</small></div>`).join(''):'<div class="empty">完成第一课后，学习表现会出现在这里。<br>断一天不会清零。</div>'}
+    function renderIssues(){const sessions=[...(state.sessions||[])].reverse().filter(s=>s.tags.length),box=$('#issueList');box.innerHTML=sessions.length?sessions.map(s=>`<article class="setting-card"><h3>${dateLabel(s.date)} · あいさつの言葉</h3><p>${s.tags.join(' · ')}</p></article>`).join(''):'<div class="empty">目前没有卡点。<br>完成“查看教材”步骤后，这里只保留你选择的原因。</div>'}
+    function renderAll(){renderHome();renderProgress();renderIssues()}
+    $$('.nav-btn').forEach(btn=>btn.onclick=()=>{$$('.nav-btn').forEach(x=>x.classList.toggle('active',x===btn));$$('.view').forEach(v=>v.classList.toggle('active',v.dataset.view===btn.dataset.target));window.scrollTo({top:0})});
+    function setMode(){state.quick=!state.quick;save();$('#timePill').textContent=state.quick?'约 10 分钟':'约 28 分钟';$('#quickMode').textContent=state.quick?'已开启快速模式 · 切回标准模式':'今天很累？切换 10 分钟快速模式';toast(state.quick?'快速模式已开启':'已切回标准模式')}
+    $('#quickMode').onclick=setMode;
+    function openFlow(){draft={blind:null,after:null,tags:[],reps:0,score:80};currentStep=1;$$('.selected,.done',$('#studyFlow')).forEach(x=>x.classList.remove('selected','done'));$$('.next',$('#studyFlow')).forEach((b,i)=>b.disabled=i===0||i===2||i===3);$('#scoreRange').value=80;$('#scoreOutput').textContent='80%';$('#flowModeLabel').textContent=state.quick?'快速模式 · 约 10 分钟':'标准模式 · 约 28 分钟';$('#studyFlow').classList.add('open');$('#studyFlow').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';showStep(1)}
+    function closeFlow(){if(currentStep>1&&currentStep<6&&!confirm('退出后，本次未完成记录不会保存。确定退出吗？'))return;$('#studyFlow').classList.remove('open');$('#studyFlow').setAttribute('aria-hidden','true');document.body.style.overflow=''}
+    $('#startStudy').onclick=openFlow;$('#closeFlow').onclick=closeFlow;
+    function showStep(n){currentStep=n;$$('.step-panel').forEach(p=>p.classList.toggle('active',+p.dataset.step===n));$('#flowCount').textContent=n<=5?`${n} / 5`:'完成';$('#flowMeter').style.width=`${Math.min(n,5)*20}%`;$('#studyFlow').scrollTo({top:0})}
+    $$('[data-choice]').forEach(group=>$$('.option',group).forEach(btn=>btn.onclick=()=>{$$('.option',group).forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');draft[group.dataset.choice]=group.dataset.choice==='blind'?+btn.dataset.value:btn.dataset.value;$('.next',group.closest('.step-panel')).disabled=false}));
+    $$('[data-tags] .tag').forEach(btn=>btn.onclick=()=>{btn.classList.toggle('selected');draft.tags=$$('[data-tags] .tag.selected').map(x=>x.textContent)});
+    $$('.rep').forEach((btn,i)=>btn.onclick=()=>{btn.classList.toggle('done');draft.reps=$$('.rep.done').length;$('.next',btn.closest('.step-panel')).disabled=draft.reps<(state.quick?1:3)});
+    $$('.next').forEach(btn=>btn.onclick=()=>showStep(currentStep+1));$$('.back').forEach(btn=>btn.onclick=()=>showStep(currentStep-1));
+    $('#scoreRange').oninput=e=>{$('#scoreOutput').textContent=e.target.value+'%';draft.score=+e.target.value};
+    $('#finishStudy').onclick=()=>{draft.date=dateKey();draft.mode=state.quick?'quick':'standard';state.sessions.push({...draft});save();const labels={hard:'仍然困难',most:'能听出大部分',full:'已经能完整跟上'};$('#resultCard').innerHTML=`<div class="result-row"><span>第一次听懂</span><b>${draft.blind}%</b></div><div class="result-row"><span>对照后</span><b>${labels[draft.after]}</b></div><div class="result-row"><span>主要卡点</span><b>${draft.tags.join('、')||'未记录'}</b></div><div class="result-row"><span>练习正确率</span><b>${draft.score}%</b></div>`;const last2=state.sessions.slice(-2);$('#switchBanner').style.display=last2.length===2&&last2.every(meets)?'block':'none';renderAll();showStep(6)};
+    $('#returnHome').onclick=closeFlow;
+    $('#resetData').onclick=()=>{if(confirm('确定清空原型中的所有学习记录吗？')){state.sessions=[];save();renderAll();toast('原型记录已清空')}};
+    initDate();renderAll();if(state.quick){$('#timePill').textContent='约 10 分钟';$('#quickMode').textContent='已开启快速模式 · 切回标准模式'}
+  </script>
+</body>
+</html>
